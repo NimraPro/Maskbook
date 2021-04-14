@@ -11,6 +11,7 @@ import { ITO_CompositionEntry } from '../../plugins/ITO/define'
 import { useAccount } from '../../web3/hooks/useAccount'
 import { useRemoteControlledDialog } from '../../utils/hooks/useRemoteControlledDialog'
 import { PluginTransakMessages } from '../../plugins/Transak/messages'
+import { PluginTraderMessages } from '../../plugins/Trader/messages'
 import { Flags } from '../../utils/flags'
 import { useStylesExtends } from '../custom-ui-helper'
 import classNames from 'classnames'
@@ -126,7 +127,14 @@ export function ToolboxHint(props: ToolboxHintProps) {
     }, [])
     //#endregion
 
-    // Todo: add a swap dialog
+    //#region Swap
+    const [, setSwapDialogOpen] = useRemoteControlledDialog(PluginTraderMessages.events.SwapDialogUpdated)
+    const openSwapDialog = useCallback(() => {
+        setSwapDialogOpen({
+            open: true,
+        })
+    }, [])
+    //#endregion
 
     const [menu, openMenu] = useMenu(
         [
@@ -152,6 +160,10 @@ export function ToolboxHint(props: ToolboxHintProps) {
                     <Typography className={classes.text}>{ToolIconURLs.token.text}</Typography>
                 </MenuItem>
             ) : null,
+            <MenuItem onClick={openSwapDialog} className={classes.menuItem}>
+                <Image src={ToolIconURLs.swap.image} width={19} height={19} />
+                <Typography className={classes.text}>{ToolIconURLs.swap.text}</Typography>
+            </MenuItem>,
         ],
         false,
         {

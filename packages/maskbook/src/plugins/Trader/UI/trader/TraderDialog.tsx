@@ -13,7 +13,7 @@ export function TraderDialog() {
         })
     }, [])
     return (
-        <InjectedDialog open={open} onClose={onClose}>
+        <InjectedDialog open={open} onClose={onClose} title="Swap">
             <DialogContent>
                 <Trader coin={{ id: 'n/a', symbol: 'n/a', name: 'n/a' }}></Trader>
             </DialogContent>
